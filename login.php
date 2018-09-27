@@ -20,7 +20,9 @@ if(isset($_POST['submit'])) // if($_POST['submit'] == "Logga in")
 		$username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_STRING);
 		$password = $_POST['password'];
 
-		$statement = $dbh->query("SELECT * FROM sh");
+		$statement = $dbh->prepare("SELECT * FROM sh WHERE username = :username");
+		$statement->bindParam(':username', $username);
+		$statement-> execute();
 		$row = $statement->fetch(PDO::FETCH_ASSOC);
 
 		//echo "<pre>" . print_r($row,1) . "</pre>";
